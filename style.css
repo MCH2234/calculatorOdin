@@ -1,0 +1,23 @@
+.calcLayout{
+    display:flex;
+    flex-direction: column;
+    border:1px solid;
+    height: 500px;
+    width: 500px;
+    margin:auto;
+}
+.first, .second, .third, .forth, .fifth{
+display:flex;
+flex-direction: row;
+flex-grow:1;
+border:1px solid;
+}
+.grow{
+    flex-grow:1;
+}
+#zero{
+    flex-grow:2;
+}
+.display{
+    height:50px;
+}
