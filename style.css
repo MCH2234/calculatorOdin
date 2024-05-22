@@ -5,7 +5,7 @@
     height: 500px;
     width: 400px;
     margin:auto;
-    border-radius: 10px;
+    border-radius: 20px;
     background-color: lightgray;
 }
 .first, .second, .third, .forth, .fifth{
@@ -38,4 +38,7 @@ margin-left:30px;
     flex-direction: column;
     flex-shrink: 0;
     flex-grow:1;
+}
+#AC, #perc, #div, #mul, #div, #min, #plus, #eql{
+    background-color: lightyellow;
 }
