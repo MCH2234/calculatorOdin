@@ -1,5 +1,19 @@
 let displ=document.querySelector(".display");
 const container=document.querySelector(".calcLayout");
+let result=0;
+function checkForPeriod(arrToCheck){
+    let hasPeriod;
+for(let is=0; is<=arrToCheck.length-1; is++){
+if(arrToCheck[is]=="."){
+    hasPeriod=is;
+    break;
+}
+else{
+    hasPeriod=-1;
+};
+};
+return hasPeriod;
+};
 function clearNumbs(ang1, ang2){
 ang1.splice(0, ang1.length);
 ang2.splice(0, ang2.length);
@@ -13,9 +27,9 @@ function showDisplay(stoinost){
 displ.value+=stoinost;
     };
 };
-let result=0;
+
 function firstOrSecond(opera, vale){
-    if(opera == "+" || opera == "-" || opera =="/" || opera == "*" || opera=="%" ){
+    if(opera == "+" || opera == "-" || opera =="/" || opera == "*" || opera=="%" || opera =="="){
         secondNumb.push(vale);
     }
     else{
@@ -25,11 +39,39 @@ function firstOrSecond(opera, vale){
 function doOperation(first, second, ope){
     let realFirst=0;
     let realSecond=0;
+    let afterPeriod1=false;
+    let afterPeriod2=false;
+    let containsPeriod1 = checkForPeriod(first);
+    let containsPeriod2 = checkForPeriod(second);
 for(i=0; i<=first.length-1; i++){
-        realFirst+= first[i]* Math.pow(10,first.length-i-1);
+    if(containsPeriod1==-1){
+        realFirst+=first[i]*Math.pow(10,first.length-1-i);
+    };
+    if(containsPeriod1>-1 && first[i]=="."){
+        afterPeriod1=true;
+    continue;
+    };
+    if(containsPeriod1>-1 && afterPeriod1==false){
+        realFirst+= first[i]* Math.pow(10,containsPeriod1-i-1);
+    }
+    else if(containsPeriod1>-1 && afterPeriod1==true){
+        realFirst+= first[i]* Math.pow(10,-(i-containsPeriod1));
+};
 };
 for(k=0; k<=second.length-1; k++){
-    realSecond+= second[k]* Math.pow(10,second.length-k-1);
+    if(containsPeriod2==-1){
+        realSecond+=second[k]*Math.pow(10,second.length-1-k);
+    };
+    if(containsPeriod2>-1 && second[k]=="."){
+        afterPeriod=true;
+    continue;
+    };
+    if(containsPeriod2>-1 && afterPeriod2==false){
+        realSecond+= second[i]* Math.pow(10,containsPeriod2-i-1);
+    }
+    else if(containsPeriod2>-1 && afterPeriod2==true){
+        realFirst+= first[i]* Math.pow(10,-(i-containsPeriod2));
+};
 };
 if(ope=="+"){
     result=realFirst+realSecond;
@@ -44,10 +86,9 @@ else if(ope=="*"){
     result=realFirst*realSecond;
 };
 
-//console.log(result);
+
 return result;
 };
-//const oppAndNumbers=[];
 let firstNumb=[];
 let secondNumb=[];
 let operation;
@@ -61,7 +102,10 @@ container.addEventListener('click', (event) => {
 
     switch(target.id) {
         case 'AC':
+            displ.value='';
+            clearNumbs(firstNumb, secondNumb);
             result=0;
+            operation = 1;
             break;
         case 'perc':
             operation = '%';
@@ -71,7 +115,8 @@ container.addEventListener('click', (event) => {
             operation = '/';
             showDisplay(operation);
             break;
-            case 'sev':
+    
+        case 'sev':
                 firstOrSecond(operation, 7);
                 showDisplay(7);
             break;
@@ -128,13 +173,18 @@ container.addEventListener('click', (event) => {
             showDisplay(0);
             break;
             case 'point':
-                firstOrSecond(operation, ".")
+                firstOrSecond(operation, ".");
+                showDisplay(".");
             break;
         case 'eql':
             doOperation(firstNumb, secondNumb, operation);
             displ.value = result;
             console.log(clearNumbs(firstNumb, secondNumb));
+            operation=1;
+            firstNumb.push(result);
             break;
 }});
 
+let newArr=[ 3, 5, 6, "."];
+console.log(checkForPeriod(newArr));
 
