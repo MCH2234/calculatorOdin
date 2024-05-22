@@ -63,14 +63,14 @@ for(k=0; k<=second.length-1; k++){
         realSecond+=second[k]*Math.pow(10,second.length-1-k);
     };
     if(containsPeriod2>-1 && second[k]=="."){
-        afterPeriod=true;
+        afterPeriod2=true;
     continue;
     };
     if(containsPeriod2>-1 && afterPeriod2==false){
-        realSecond+= second[i]* Math.pow(10,containsPeriod2-i-1);
+        realSecond+= second[k]* Math.pow(10,containsPeriod2-k-1);
     }
     else if(containsPeriod2>-1 && afterPeriod2==true){
-        realFirst+= first[i]* Math.pow(10,-(i-containsPeriod2));
+        realFirst+= second[k]* Math.pow(10,-(k-containsPeriod2));
 };
 };
 if(ope=="+"){
