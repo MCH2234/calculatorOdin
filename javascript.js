@@ -1,6 +1,7 @@
 let displ=document.querySelector(".display");
 const container=document.querySelector(".calcLayout");
 let result=0;
+const delButton=document.getElementById("del");
 function checkForPeriod(arrToCheck){
     let hasPeriod;
 for(let is=0; is<=arrToCheck.length-1; is++){
@@ -99,7 +100,6 @@ displ.value+=valu;
 
 container.addEventListener('click', (event) => {
     let target = event.target;
-
     switch(target.id) {
         case 'AC':
             displ.value='';
@@ -108,8 +108,12 @@ container.addEventListener('click', (event) => {
             operation = 1;
             break;
         case 'perc':
-            operation = '%';
-            showDisplay(operation);
+            /*operation = '%';
+            showDisplay(operation);*/
+            result=firstNumb.join('')/100;
+            displ.value=result;
+            clearNumbs(firstNumb, secondNumb);
+            firstNumb.push(result);
             break;
         case 'div':
             operation = '/';
@@ -179,12 +183,25 @@ container.addEventListener('click', (event) => {
         case 'eql':
             doOperation(firstNumb, secondNumb, operation);
             displ.value = result;
-            console.log(clearNumbs(firstNumb, secondNumb));
+            clearNumbs(firstNumb, secondNumb);
             operation=1;
-            firstNumb.push(result);
+            const finalArray=Array.from(String(result), Number);
+            firstNumb=finalArray;
+            //firstNumb.push(result);
+
+            break;
+            case 'del':
+            if(operation == "+" || operation == "-" || operation =="/" || operation == "*" || operation =="="){
+                secondNumb.splice(secondNumb.length-1, 1);
+                displ.value=secondNumb.join('');
+            }
+            else{
+                firstNumb.splice(firstNumb.length-1, 1);
+                displ.value=firstNumb.join('');
+            };
             break;
 }});
 
-let newArr=[ 3, 5, 6, "."];
-console.log(checkForPeriod(newArr));
+/*let newArr=[ 3, 5, 6, "."];
+console.log(checkForPeriod(newArr));*/
 
